@@ -68,10 +68,8 @@ Use `curl` to send requests (see examples below), or open browser to `localhost:
 	- Pings all worker nodes and returns HTTP status code 200 if all nodes working nominally. Returns error message if there are any issues.
 
 
-## Sample API curl calls:
-
-#### /inference/
-- Either should work:
+## Sample curl calls:
+- Either of string formatting below works:
 ```bash
 $ curl -X POST "http://localhost:8004/inference" \
  	-H 'Content-Type: multipart/form-data' \
