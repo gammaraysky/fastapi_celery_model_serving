@@ -1,0 +1,12 @@
+vol_mount_path: "/usr/src/app/vol_mount"
+
+# list model checkpoints here.
+models:
+  sincnet-v1: "model_checkpoints/epoch=15.ckpt"
+  # sincnet-v2: "/home/aisg/vol_mount/model_checkpoints/epoch=14.ckpt"  # any additional checkpoints
+
+# where should inference output rttms be saved to
+output_basepath: "output_rttm"
+# location of inference jobs management sqlite database
+# jobs_db: "/home/aisg/vol_mount/jobs_db.sqlite"
+

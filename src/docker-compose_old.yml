@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: ./project
+    ports:
+      - 8004:8000
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    volumes:
+      - ./:/usr/src/app
+      - ./vol_mount:/usr/src/app/vol_mount
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - rabbit
+
+  worker:
+    build: ./project
+    command: celery -A worker.celery worker --loglevel=info --logfile=logs/celery.log
+    volumes:
+      - ./project:/usr/src/app
+      - ./vol_mount:/usr/src/app/vol_mount
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      # - REDIS_HOST=redis
+    depends_on:
+      - web
+      - redis
+      - rabbit
+
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+
+  # RabbitMQ - queue
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+    volumes:
+      # - rabbit-data:/data
+      - ./rabbitmq_data:/var/lib/rabbitmq
+
+
+  dashboard:
+    build: ./project
+    command: celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555
+    ports:
+      - 5556:5555
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      # - REDIS_HOST=redis
+    depends_on:
+      - web
+      - redis
+      - rabbit
+      - worker
+
+volumes:
+  redis-data:
+    driver: local
+  rabbit-data:
+    driver: local

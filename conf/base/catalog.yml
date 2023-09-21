@@ -1,0 +1,163 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+
+### Combined Train Output ###
+combined_train_rttm_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/train.rttm
+
+combined_train_uem_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/train.uem
+
+combined_train_lst_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/train.lst
+
+combined_wav_files_output:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path:  /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/audio
+  filename_suffix: ".wav"
+
+### Combined Validation Output ###
+combined_val_rttm_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/validation.rttm
+
+combined_val_uem_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/validation.uem
+
+combined_val_lst_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/validation.lst
+
+### Combined Test Output ###
+combined_test_rttm_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/test.rttm
+
+combined_test_uem_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/test.uem
+
+combined_test_lst_file_output:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/05_model_input/test.lst
+
+### Ali Far Train 300 min ###
+ali_far_train.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ali_far/train/rttm
+  filename_suffix: ".rttm"
+
+ali_far_train.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path:  /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ali_far/train/audio
+  filename_suffix: ".wav"
+
+ali_far_train.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path:  /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ali_far/train/audio
+  filename_suffix: ".wav"
+
+### Ali Far Validation ### 
+ali_far_val.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/val/rttm
+  filename_suffix: ".rttm"
+
+ali_far_val.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/val/audio
+  filename_suffix: ".wav"
+
+ali_far_val.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/val/audio
+  filename_suffix: ".wav"
+
+### Ali Far Test ###
+ali_far_test.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/test/rttm
+  filename_suffix: ".rttm"
+
+ali_far_test.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/test/audio
+  filename_suffix: ".wav"
+
+ali_far_test.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ali_far/test/audio
+  filename_suffix: ".wav"
+
+### AMI Far Train ###
+ami_far_train.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ami_far/train/rttm
+  filename_suffix: ".rttm"
+
+ami_far_train.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path:  /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ami_far/train/audio
+  filename_suffix: ".wav"
+
+ami_far_train.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path:  /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/04_sampled/sampled_config_300mins/ami_far/train/audio
+  filename_suffix: ".wav"
+
+### AMI Far Validation ### 
+ami_far_val.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/val/rttm
+  filename_suffix: ".rttm"
+
+ami_far_val.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/val/audio
+  filename_suffix: ".wav"
+
+ami_far_val.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/val/audio
+  filename_suffix: ".wav" 
+
+### AMI Far Test ###
+ami_far_test.rttm_files_input:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/test/rttm
+  filename_suffix: ".rttm"  
+
+ami_far_test.wav_files_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/test/audio
+  filename_suffix: ".wav"
+
+ami_far_test.wav_files_duration_input:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.DurationOnlyAudioDataSet
+  path: /polyaxon-v1-data/workspaces/zhixuan/vad/klass/data/03_primary/ami_far/test/audio
+  filename_suffix: ".wav"

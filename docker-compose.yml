@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - 8004:8000
+    command: uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload
+    volumes:
+      - .:/usr/src/app
+      - ../vol_mount:/usr/src/app/vol_mount
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CELERY_TASK_TRACK_STARTED=true
+    depends_on:
+      - redis
+      - rabbit
+    networks:
+      - mynetwork
+
+  worker:
+    build: .
+    command: celery -A src.klass.vad_fastapi.worker.celery worker --loglevel=info # --logfile=logs/celery.log
+    volumes:
+      - .:/usr/src/app
+      - ../vol_mount:/usr/src/app/vol_mount
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CELERY_TASK_TRACK_STARTED=true
+    depends_on:
+      - web
+      - redis
+      - rabbit
+    networks:
+      - mynetwork
+    # https://stackoverflow.com/questions/40430543/healthcheck-of-a-docker-container-running-celery-tasks
+    # https://distributedpython.com/posts/docker-healthcheck-for-celery-workers/
+    # healthcheck:
+    #     test: celery -b amqp://admin:mypass@rabbit:5672 inspect ping -d celery@$$HOSTNAME
+    #     interval: 30s
+    #     timeout: 10s
+    #     retries: 3
+
+  redis:
+    image: redis:alpine
+    command: redis-server --bind 0.0.0.0 --appendonly yes
+    volumes:
+      - ../data/redis_results_backend:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+  # RabbitMQ - queue
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+    volumes:
+      # - rabbit-data:/data
+      - ../data/rabbitmq_broker:/var/lib/rabbitmq
+    networks:
+      - mynetwork
+
+
+  dashboard:
+    hostname: flower
+    build: .
+    command: celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555
+    # command: celery --broker=redis://redis:6379/0 flower --port=5555
+    ports:
+      - 5556:5555
+    environment:
+      - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - FLOWER_PERSISTENT=True
+      - FLOWER_STATE_SAVE_INTERVAL=20
+      - FLOWER_DB=/etc/db/flower.db
+    volumes:
+      - ../data/flower_dashboard:/etc/db
+    depends_on:
+      - web
+      - redis
+      - rabbit
+      - worker
+    networks:
+      - mynetwork
+
+
+networks:
+  mynetwork:
+    driver: bridge
+
+#   dashboard:
+#     build: .
+#     # command: celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555
+#     command: celery --broker=redis://redis:6379/0 flower --port=5555
+#     ports:
+#       - 5556:5555
+#     environment:
+#       - CELERY_BROKER_URL=redis://redis:6379/0
+#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+#       - FLOWER_PORT=5555
+#       - FLOWER_PERSISTENT=True
+#       - FLOWER_STATE_SAVE_INTERVAL=10000
+#       - FLOWER_DB=/etc/db/flower.db
+#     ports:
+#       - "5555:5555"
+#     volumes:
+#       - ./flower/storage:/etc/db/re
+#     depends_on:
+#       - redis
+
+# volumes:
+#   redis-data:
+#     driver: local
+#   rabbit-data:
+#     driver: local
+
