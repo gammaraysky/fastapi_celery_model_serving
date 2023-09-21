@@ -12,6 +12,7 @@ Redis acts as the results backend data store, ensuring seamless caching and data
 #### Prepare volume mount folder to contain:
 - Model checkpoints
 - Audio files for inferencing
+  
 Currently in the `docker-compose.yml`, the volume mount folder is specified as `../vol_mount/`, so you can create this folder alongside this repo, or change its path as needed.
 
 Run these commands, and you should have a folder structure as shown below.
