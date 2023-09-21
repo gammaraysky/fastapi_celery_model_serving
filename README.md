@@ -43,17 +43,17 @@ Sample folder structure for `vol_mount`:
 ```
 
 #### fastapi_deploy.yaml configuration
-- Configured in `conf/base/fastapi_deploy.yaml` to specify the `model_id`s (that will be selectable at the API endpoint) and their `checkpoint path`s:
+- Configure `conf/base/fastapi_deploy.yaml` to specify the `model_id`s (that will be selectable at the API endpoint) and their `checkpoint path`s:
 
 
 ## Run
-To run the deployment, run:
+To run the deployment:
 ```
 docker-compose up -d --build
 ```
 
-Use `curl` to send requests (see examples below), or open browser to `localhost:8004/` to get a HTML form:
-
+Use `curl` to send requests (see examples below), or open browser to `localhost:8004/` to get a HTML form to submit inference requests. Thereafter, you can check back using the :
+`/task` or `/all_tasks` endpoints to check the status of the batch job, and retrieve the generated RTTM file paths. 
 
 ## Endpoints:
 - ### **/** 	(GET)
