@@ -1,54 +1,101 @@
+"""
+Audio Inference Module
+
+This module provides functions and Celery tasks for performing batch
+audio file inference using PyAnNet models.
+
+Functions:
+    - pyannet_model_predict(wave_paths, output_path, model_ckpt): Load a
+    PyAnNet model and run predictions on a batch of audio files.
+
+Celery Tasks:
+    - run_inference_pipeline(self, inference_args): Perform batch audio
+    file inference using the specified model.
+
+Examples:
+    >>> pyannet_model_predict(
+    ...     ["audio1.wav", "audio2.wav"],
+    ...     "output/",
+    ...     "model_checkpoint.ckpt")
+    {
+        'audio1.wav': {
+            'status': 'SUCCESS',
+            'rttm_path': 'output/audio1.rttm'
+        },
+        'audio2.wav': {
+            'status': 'ERROR: Error during model inference',
+            'rttm_path': None
+        }
+    }
+
+    >>> run_inference_pipeline({
+    ...     'model_id': 'model1',
+    ...     'audio_files': {
+    ...         'audio1.wav': None,
+    ...         'audio2.wav': None
+    ...     }
+    ... })
+    {
+        'audio1.wav': {
+            'status': 'SUCCESS',
+            'rttm_path': 'output/audio1.rttm'
+        },
+        'audio2.wav': {
+            'status': 'SUCCESS',
+            'rttm_path': 'output/audio2.rttm'
+        }
+    }
+
+Notes:
+    - This module integrates with PyAnNet models to perform batch audio
+      file inference.
+    - The 'run_inference_pipeline' Celery task asynchronously performs
+      inference on a list of audio files.
+    - The 'pyannet_model_predict' function loads a PyAnNet model and
+      runs predictions on a batch of audio files, saving the results as
+      RTTM files.
+    - Ensure that the necessary configuration, model checkpoints, and
+      audio files exist at the specified paths.
+"""
+
 import logging
 import os
-import time
 from pathlib import Path
 from typing import List
 
-import yaml
-from celery import Celery, Task, states
-from celery.exceptions import Ignore, Reject
-from src.klass.pyannetmodel.model import PyanNetModel
+from celery import Celery
 
-logging.basicConfig(level=logging.INFO)
+from src.klass.pyannetmodel.model import PyanNetModel
+from src.klass.vad_fastapi.src.checkpoint_loader import CheckpointLoader
+from src.klass.vad_fastapi.src.utils import read_config
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
-########## LOAD FASTAPI YAML CONFIG ##########
-def read_config(file_path):
-    """
-    Read a YAML configuration file and return its contents as a
-    dictionary.
-
-    Args:
-        file_path (str): Path to the YAML configuration file to be read.
-
-    Returns:
-        dict: A dictionary containing the configuration data
-
-    Example:
-        >>> read_config("config.yml")
-        {'key1': 'value1', 'key2': 'value2'}
-    """
-    with open(file_path, "r") as file:
-        config_data = yaml.load(file, Loader=yaml.FullLoader)
-    return config_data
-
-
+########################################################################
+# LOAD FASTAPI YAML CONFIG #############################################
 cfg = read_config("conf/base/fastapi_deploy.yaml")
 logger.info("Loaded YAML config.")
 
-########## MODEL DEFINITIONS ##########
-MODELS = cfg["models"]
-MODEL_IDS = list(MODELS.keys())
+########################################################################
+# MODEL DEFINITIONS ####################################################
+MODEL_PATH = str(Path(cfg["vol_mount_path"]).joinpath(cfg["model_path"]))
+MODELS = CheckpointLoader(MODEL_PATH).to_dict()
+
 logger.info("Loaded model definitions: %s", MODELS)
 
-########## SETUP PATHS ##########
+########################################################################
+# SETUP PATHS ##########################################################
 BASE_MOUNT_PATH = cfg["vol_mount_path"]
 OUTPUT_RTTM_PATH = str(Path(BASE_MOUNT_PATH).joinpath(cfg["output_basepath"]))
 
-########## INIT CELERY ##########
+########################################################################
+# INIT CELERY ##########################################################
 celery = Celery(__name__)
-celery.conf.update(enable_utc=True, timezone="Asia/Singapore")
+celery.conf.update(enable_utc=True, timezone=cfg["timezone"])
 celery.conf.broker_url = os.environ.get(
     "CELERY_BROKER_URL", "amqp://admin:mypass@localhost:5672"
 )
@@ -57,9 +104,10 @@ celery.conf.result_backend = os.environ.get(
 )
 
 
-########## CELERY TASKS ##########
+########################################################################
+# CELERY TASKS #########################################################
 @celery.task(name="run_inference_pipeline", bind=True)  # throws=(ValueError, Ignore))
-def run_inference_pipeline(self, wave_paths: List[str], model_id: str) -> dict:
+def run_inference_pipeline(self, inference_args: dict) -> dict:
     """
     Perform batch audio file inference using the specified model.
 
@@ -70,10 +118,18 @@ def run_inference_pipeline(self, wave_paths: List[str], model_id: str) -> dict:
 
     Args:
         self: A reference to the Celery task instance.
-        wave_paths (List[str]): A list of file paths to audio files for
-            batch inference.
-        model_id (str): The identifier of the model to be used for
-            inference.
+        inference_args (dict): A dict containing `model_label` and
+            `audio_files` keys. For audio files, each subkey is the file
+            path to the inference audio file. Value can be None:
+            {
+                'model_label' (str): The identifier of the model to be
+                    used for inference.
+                'audio_files' : {
+                    '/path/to/file1.wav' : None,
+                    '/path/to/file2.wav' : None,
+                    ...
+                }
+            }
 
     Returns:
         dict: A dictionary containing the output RTTM paths and status
@@ -81,9 +137,12 @@ def run_inference_pipeline(self, wave_paths: List[str], model_id: str) -> dict:
 
     """
     ### GET MODEL CHECKPOINT ###
-    model_ckpt = MODELS[model_id]
-    model_ckpt = str(Path(BASE_MOUNT_PATH).joinpath(model_ckpt))
-    logger.info("Requested model: %s (%s)", model_id, model_ckpt)
+    model_ckpt = MODELS[inference_args["model_label"]]["path"]
+    logger.info(
+        "Requested model: '%s' - '%s'", inference_args["model_label"], model_ckpt
+    )
+
+    wave_paths = list(inference_args["audio_files"].keys())
 
     results = pyannet_model_predict(wave_paths, OUTPUT_RTTM_PATH, model_ckpt)
     # response["results"] = results
@@ -94,7 +153,7 @@ def run_inference_pipeline(self, wave_paths: List[str], model_id: str) -> dict:
     # (e.g. misspelt or zero-byte input audio files)
 
     # However, in Celery's implementation, a custom state is only
-    # temporary and will be overriden by Celery built-in states (i.e
+    # temporary and will be overridden by Celery built-in states (i.e
     # SUCCESS) so long as you return from the task.
 
     # We need to return the task to propagate our partial results. If we
@@ -126,6 +185,8 @@ def run_inference_pipeline(self, wave_paths: List[str], model_id: str) -> dict:
     return results
 
 
+########################################################################
+# MODEL INFERENCE ######################################################
 def pyannet_model_predict(
     wave_paths: List[str], output_path: str, model_ckpt: str
 ) -> dict:

@@ -1,12 +1,14 @@
-from pathlib import PurePosixPath
-from typing import Tuple, Any, Dict
-import fsspec 
+import logging
+from pathlib import PurePosixPath, Path
+from typing import Any, Dict, Tuple
 
+import fsspec
+import numpy as np
 import soundfile as sf
-import numpy as np 
+from kedro.io.core import AbstractDataSet, get_filepath_str, get_protocol_and_path
 
-from kedro.io.core import AbstractDataSet
-from kedro.io.core import get_filepath_str, get_protocol_and_path
+logger = logging.getLogger(__name__)
+
 
 class AudioDataSet(AbstractDataSet[sf.SoundFile, Tuple[np.ndarray, int]]):
     """``AudioDataSet`` loads / saves audio data from a given filepath as a tuple containing a `numpy` array and an integer representing the sample rate using SoundFile.
@@ -39,9 +41,9 @@ class AudioDataSet(AbstractDataSet[sf.SoundFile, Tuple[np.ndarray, int]]):
         """
         # using get_filepath_str ensures that the protocol and path are appended correctly for different filesystems
         load_path = get_filepath_str(self._filepath, self._protocol)
-        
+
         # Using fsspec.open to open the audio file and obtain a file-like object
-        with fsspec.open(self._filepath, 'rb') as f:
+        with fsspec.open(load_path, "rb") as f:
             audio_data, sample_rate = sf.read(f)
             return audio_data, sample_rate
 
@@ -54,8 +56,11 @@ class AudioDataSet(AbstractDataSet[sf.SoundFile, Tuple[np.ndarray, int]]):
         # using get_filepath_str ensures that the protocol and path are appended correctly for different filesystems
         save_path = get_filepath_str(self._filepath, self._protocol)
 
+        # if path doesn't exist, create it.
+        Path(save_path).parent.mkdir(exist_ok=True, parents=True)
+
         # Unpack the data tuple into audio_data and sample_rate
-        audio_data, sample_rate = data        
+        audio_data, sample_rate = data
 
         # Using fsspec.open to open the audio file and obtain a file-like object
         with self._fs.open(save_path, "wb") as f:
@@ -69,11 +74,12 @@ class AudioDataSet(AbstractDataSet[sf.SoundFile, Tuple[np.ndarray, int]]):
         """
         # Implementation for describing dataset attributes
         description = {
-            'filepath': self._filepath,
-            'dataset_type': 'audio',
+            "filepath": self._filepath,
+            "dataset_type": "audio",
             # Add more attributes if needed
         }
         return description
+
 
 class SoundFileInfoDataSet(AbstractDataSet[sf.SoundFile, sf.info]):
     def __init__(self, filepath: str):
@@ -95,7 +101,7 @@ class SoundFileInfoDataSet(AbstractDataSet[sf.SoundFile, sf.info]):
         """
         # using get_filepath_str ensures that the protocol and path are appended correctly for different filesystems
         load_path = get_filepath_str(self._filepath, self._protocol)
-        
+
         # Using soundfile.info to get audio file information directly from the file path
         info = sf.info(load_path)
         return info
@@ -124,11 +130,12 @@ class SoundFileInfoDataSet(AbstractDataSet[sf.SoundFile, sf.info]):
         """
         # Implementation for describing dataset attributes
         description = {
-            'filepath': self._filepath,
-            'dataset_type': 'audio',
+            "filepath": self._filepath,
+            "dataset_type": "audio",
             # Add more attributes if needed
         }
         return description
+
 
 class DurationOnlyAudioDataSet(AudioDataSet):
     """Subclass of AudioDataSet that loads only the duration of the audio file."""
@@ -158,8 +165,8 @@ class DurationOnlyAudioDataSet(AudioDataSet):
         """
         # Implementation for describing dataset attributes
         description = {
-            'filepath': self._filepath,
-            'dataset_type': 'audio',
+            "filepath": self._filepath,
+            "dataset_type": "audio",
             # Add more attributes if needed
         }
         return description

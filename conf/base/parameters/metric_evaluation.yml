@@ -1,0 +1,23 @@
+# This is a boilerplate parameters config generated for pipeline 'metric_evaluation'
+# using Kedro 0.18.12.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/0.18.12/kedro_project_setup/configuration.html#parameters
+
+
+# evaluation_database_config
+evaluation_database_config: "conf/base/metric_evaluation_database.yml"
+
+# vad config
+pyannote_config:
+  protocol: "MyDatabase.Segmentation.MyProtocol"
+
+# Lightning Checkpoint file path
+checkpoint_base_path: "lightning_logs/"
+
+# PyanNet Post Processing Parameters
+pyannet_post_processing_config:
+  onset: 0.5
+  offset: 0.5
+  min_duration_on: 0.0
+  min_duration_off: 0.0

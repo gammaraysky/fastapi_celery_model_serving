@@ -1,12 +1,18 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>VAD Model Inference</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/bootstrap.min.css') }}">
     <link rel="icon" href="{{ url_for('static', path='/Klass-favicon.ico') }}">
 </head>
+
 <body class="d-flex align-items-center justify-content-center vh-100">
-    <div class="container">
+    <div class="container"> -->
+
+{% extends "_base.html" %}
+
+{% block content %}
+
         <h1 class="text-center mb-4">VAD Model Inference</h1>
         <form action="/inference" method="post" class="border p-4 bg-secondary rounded">
             <div class="form-group">
@@ -18,15 +24,23 @@
 
             <div class="form-group">
                 <h4 class="text-white fw-bold"><label for="model_id">Select Model:</label></h4>
-                <select id="model_id" name="model_id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                    {% for model_id in model_ids %}
-                    <option value="{{ model_id }}">{{ model_id }}</option>
+                <select id="model_label" name="model_label" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    {% for model_label in model_labels %}
+                    <option value="{{ model_label }}">{{ model_label }}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-    </div>
+
+
+{% endblock %}
+
+
+
+    <!-- </div>
 </body>
-</html>
+</html> -->
+
+

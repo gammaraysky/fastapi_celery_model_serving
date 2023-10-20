@@ -1,0 +1,19 @@
+ali_far_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 2
+
+ali_near_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 2
+
+ami_far_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 2
+
+ami_near_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 2

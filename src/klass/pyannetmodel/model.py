@@ -9,18 +9,18 @@ model_params for PyanNetModel are of the form:
   "min_duration_off": 0.0
 }
 """
+import logging
 import os
 import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, Union
-import logging
+
 from pyannote.audio import Model as md
 from pyannote.audio.pipelines import VoiceActivityDetection
 from pyannote.database import FileFinder, registry
 
 from src.klass.pyannetmodel import generate_inference_rttm
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

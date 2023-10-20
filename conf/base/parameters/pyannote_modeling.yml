@@ -1,0 +1,42 @@
+# This is a boilerplate parameters config generated for pipeline 'pyannote_modeling'
+# using Kedro 0.18.11.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/0.18.11/kedro_project_setup/configuration.html#parameters
+
+seed: 0
+
+# mlflow
+mlflow_tracking_uri: "http://10.43.185.71:5005"
+mlflow_experiment_name: "augment0.3experimentreproducibilitykedro"
+MLFLOW: True
+
+# database config
+database_config: "conf/base/database_pyannote.yml"
+
+# vad config
+vad_config:
+  protocol: "MyDatabase.Segmentation.MyProtocol"
+  duration: 2.0
+  batch_size: 128
+  stride: 10
+
+# early stopping config
+early_stopping_config:
+  min_delta: 0.0
+  patience: 5
+  verbose: False
+
+# trainer config
+trainer_config:
+  devices: 1
+  accelerator: "auto"
+  max_epochs: 100
+
+# checkpoint config
+checkpoint_config:
+  save_top_k: -1
+  every_n_epochs: 1
+  save_last: False
+  save_weights_only: False
+  verbose: False

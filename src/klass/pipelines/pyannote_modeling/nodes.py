@@ -2,6 +2,7 @@
 This is a boilerplate pipeline 'pyannote_modeling'
 generated using Kedro 0.18.11
 """
+import json
 import logging
 
 import mlflow
@@ -15,6 +16,7 @@ from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.utilities.seed import seed_everything
 from torchmetrics.classification import BinaryF1Score
 
+
 def train_voice_activity_detection(
     seed: int,
     mlflow_tracking_uri: str,
@@ -25,6 +27,9 @@ def train_voice_activity_detection(
     trainer_config: dict,
     checkpoint_config: dict,
     MLFLOW: bool,
+    train_model_input_rttm_file: str,
+    val_model_input_rttm_file: str,
+    test_model_input_rttm_file: str,
 ) -> None:
     """Train Voice Activity Detection Model
 
@@ -33,11 +38,26 @@ def train_voice_activity_detection(
         mlflow_tracking_uri (str): Cluster IP of the MLFlow service.
         mlflow_experiment_name (str): Name of the MLFlow experiment.
         database_config (str): Path to the database configuration file.
-        vad_config (dict): Configuration for Voice Activity Detection (VAD) model.
-        early_stopping_config (dict): Configuration for early stopping callback.
-        checkpoint_config (dict): Configuration for saving model checkpoints.
-        trainer_config (dict): Configuration for PyTorch Lightning Trainer.
+        vad_config (dict): Configuration for Voice Activity Detection
+            (VAD) model.
+        early_stopping_config (dict): Configuration for early stopping
+            callback.
+        checkpoint_config (dict): Configuration for saving model
+            checkpoints.
+        trainer_config (dict): Configuration for PyTorch Lightning
+            Trainer.
         MLFLOW (bool): True for MLFlow logging.
+        train_model_input_rttm_file (str): Text contents of the Train
+            RTTM file.
+        val_model_input_rttm_file (str): Text contents of the Val RTTM
+            file.
+        test_model_input_rttm_file (str): Text contents of the Test RTTM
+            file.
+            These last 3 RTTM file arguments are set as inputs to
+            force Kedro to recognise it is dependent on other prior
+            pipelines that produce this file before running training
+            pipeline.
+
     Returns:
         None
     """
@@ -50,26 +70,20 @@ def train_voice_activity_detection(
         mlflow.set_experiment(mlflow_experiment_name)
         mlflow.start_run()
 
-    registry.load_database(
-        database_config, mode="LoadingMode=LoadingMode.OVERRIDE"
-    )
+    registry.load_database(database_config, mode="LoadingMode=LoadingMode.OVERRIDE")
     # pyannote.database protocol
     protocol = registry.get_protocol(
-        vad_config["protocol"], 
-        preprocessors={"audio": FileFinder()}
+        vad_config["protocol"], preprocessors={"audio": FileFinder()}
     )
 
     vad_task = VoiceActivityDetection(
-        protocol, 
-        duration=vad_config.get("duration", 2.0), 
-        batch_size=vad_config.get("batch_size", 128), 
-        metric=BinaryF1Score()
+        protocol,
+        duration=vad_config.get("duration", 2.0),
+        batch_size=vad_config.get("batch_size", 128),
+        metric=BinaryF1Score(),
     )
 
-    vad_model = PyanNet(
-        task=vad_task, 
-        sincnet={"stride": vad_config.get("stride", 10)}
-    )
+    vad_model = PyanNet(task=vad_task, sincnet={"stride": vad_config.get("stride", 10)})
 
     monitor, direction = vad_task.val_monitor
 
@@ -111,3 +125,7 @@ def train_voice_activity_detection(
 
     if MLFLOW:
         mlflow.end_run()
+
+    json_content = json.dumps({"model_trained": "yes"})
+
+    return [json_content]

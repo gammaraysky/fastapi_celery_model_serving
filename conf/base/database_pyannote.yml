@@ -1,0 +1,26 @@
+Databases:
+  MyDatabase:
+    - ../../data/06_augmented/30percent/ali_far/train/audio/{uri}.wav
+    - ../../data/06_augmented/30percent/ami_far/train/audio/{uri}.wav
+    - ../../data/06_augmented/30percent/ali_near/train/audio/{uri}.wav
+    - ../../data/06_augmented/30percent/ami_near/train/audio/{uri}.wav
+    - ../../data/03_primary/ami_far/val/audio/{uri}.wav
+    - ../../data/03_primary/ali_far/val/audio/{uri}.wav
+Protocols:
+  MyDatabase:
+    Segmentation:
+      MyProtocol:
+        classes:
+          - speech
+        train:
+            uri: ../../data/07_model_input/train.lst
+            annotation: ../../data/07_model_input/train.rttm
+            annotated: ../../data/07_model_input/train.uem
+        development:
+            uri: ../../data/07_model_input/validation.lst
+            annotation: ../../data/07_model_input/validation.rttm
+            annotated: ../../data/07_model_input/validation.uem
+        test:
+            uri: ../../data/07_model_input/test.lst
+            annotation: ../../data/07_model_input/test.rttm
+            annotated: ../../data/07_model_input/test.uem

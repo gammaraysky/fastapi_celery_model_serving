@@ -1,0 +1,124 @@
+### TRAIN DATA - CHUNKING, SAMPLING, AUGMENTATION CONFIGURATION ###
+# below parameters specify the chunking, sampling, and augmentation
+# configuration for all train data.
+# augmentations are pre-generated to reduce training time as compared to
+# augmenting on-the-fly
+
+### TRAIN DATA - CHUNKING AND SAMPLING CONFIGURATION ###
+# we opted for chunk size 30s, and for 25hrs per dataset
+ali_far_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 1500
+ami_far_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 1500
+ali_near_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 1500
+ami_near_train.train_chunking_sampling_config:
+  sample_rate: 16000
+  chunk_size_secs: 30
+  mins_to_sample: 1500
+
+### TRAIN DATA - AUGMENTATION CONFIGURATION ###
+# curriculum learning was used, i.e we ran the augmentation pipeline
+# (kedro run -p train_aug) to generate configs of 5%, 10%, 15%, 20%
+# augmented respectively, each time outputting to different folders
+ali_far_train.train_augment_config:
+  proportion_to_augment: 0.3
+  augmentations:
+    bgnoise:
+      p: 1
+      min_snr_in_db: 3.0
+      max_snr_in_db: 30.0
+      bg_paths: "data/bg_noise"
+    gain:
+      p: 1
+      min_gain_in_db: -15.0
+      max_gain_in_db: 5.0
+    hipass:
+      p: 1
+      min_cutoff_freq: 20
+      max_cutoff_freq: 500
+    lopass:
+      p: 1
+      min_cutoff_freq: 3000
+      max_cutoff_freq: 7500
+    reverb:
+      p: 0.0
+      path: "data/BUTreverb_rirs"
+
+ami_far_train.train_augment_config:
+  proportion_to_augment: 0.3
+  augmentations:
+    bgnoise:
+      p: 1
+      min_snr_in_db: 3.0
+      max_snr_in_db: 30.0
+      bg_paths: "data/bg_noise"
+    gain:
+      p: 1
+      min_gain_in_db: -15.0
+      max_gain_in_db: 5.0
+    hipass:
+      p: 1
+      min_cutoff_freq: 20
+      max_cutoff_freq: 500
+    lopass:
+      p: 1
+      min_cutoff_freq: 3000
+      max_cutoff_freq: 7500
+    reverb:
+      p: 0.0
+      path: "data/BUTreverb_rirs"
+
+ali_near_train.train_augment_config:
+  proportion_to_augment: 0.3
+  augmentations:
+    bgnoise:
+      p: 1
+      min_snr_in_db: 3.0
+      max_snr_in_db: 30.0
+      bg_paths: "data/bg_noise"
+    gain:
+      p: 1
+      min_gain_in_db: -15.0
+      max_gain_in_db: 5.0
+    hipass:
+      p: 1
+      min_cutoff_freq: 20
+      max_cutoff_freq: 500
+    lopass:
+      p: 1
+      min_cutoff_freq: 3000
+      max_cutoff_freq: 7500
+    reverb:
+      p: 1
+      path: "data/BUTreverb_rirs"
+
+ami_near_train.train_augment_config:
+  proportion_to_augment: 0.3
+  augmentations:
+    bgnoise:
+      p: 1
+      min_snr_in_db: 3.0
+      max_snr_in_db: 30.0
+      bg_paths: "data/bg_noise"
+    gain:
+      p: 1
+      min_gain_in_db: -15.0
+      max_gain_in_db: 5.0
+    hipass:
+      p: 1
+      min_cutoff_freq: 20
+      max_cutoff_freq: 500
+    lopass:
+      p: 1
+      min_cutoff_freq: 3000
+      max_cutoff_freq: 7500
+    reverb:
+      p: 1
+      path: "data/BUTreverb_rirs"

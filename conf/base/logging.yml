@@ -5,18 +5,22 @@ disable_existing_loggers: False
 formatters:
   simple:
     format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  json:
+    format: "%(asctime)s %(process)d %(name)s %(levelname)s %(message)s"
+    class: pythonjsonlogger.jsonlogger.JsonFormatter
+    datefmt: "%Y-%m-%dT%H:%M:%S%z"
 
 handlers:
   console:
     class: logging.StreamHandler
     level: INFO
-    formatter: simple
+    formatter: json  # simple
     stream: ext://sys.stdout
 
   info_file_handler:
     class: logging.handlers.RotatingFileHandler
     level: INFO
-    formatter: simple
+    formatter: json  # simple
     filename: info.log
     maxBytes: 10485760 # 10MB
     backupCount: 20
@@ -38,4 +42,5 @@ loggers:
     level: INFO
 
 root:
-  handlers: [rich, info_file_handler]
+  level: INFO
+  handlers: [rich, console, info_file_handler]

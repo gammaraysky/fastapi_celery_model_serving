@@ -1,0 +1,16 @@
+# Metric evaluation on AMI Far (val) + Ali Far (val)
+Databases:
+  MyDatabase:
+    - ../../data/03_primary/ami_far/val/audio/{uri}.wav
+    - ../../data/03_primary/ali_far/val/audio/{uri}.wav
+Protocols:
+  MyDatabase:
+    Segmentation:
+      MyProtocol:
+        classes:
+          - speech
+
+        development:
+            uri: ../../data/07_model_input/validation.lst
+            annotation: ../../data/07_model_input/validation.rttm
+            annotated: ../../data/07_model_input/validation.uem

@@ -1,0 +1,709 @@
+############ DATA CATALOG #############
+#######################################
+# (in VScode, press CTRL-K, CTRL-1 to
+# fold code for easier viewing)
+
+# between normal and test, just switch
+# /polyaxon-v1-data/workspaces/data_tt
+# to
+# /polyaxon-v1-data/workspaces/data2
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+########### 02_INTERMEDIATE ###########
+########### ALI FAR - TRAIN ###########
+ali_far_train.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/train/rttm/
+  filename_suffix: ".rttm"
+ali_far_train.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/train/audio/
+  filename_suffix: ".wav"
+############ ALI FAR - VAL ############
+ali_far_val.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/val/rttm/
+  filename_suffix: ".rttm"
+ali_far_val.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/val/audio/
+  filename_suffix: ".wav"
+ali_far_val.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/val/audio/
+  filename_suffix: ".wav"
+############ ALI FAR - TEST ############
+ali_far_test.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/test/rttm/
+  filename_suffix: ".rttm"
+ali_far_test.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/test/audio/
+  filename_suffix: ".wav"
+ali_far_test.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_far/test/audio/
+  filename_suffix: ".wav"
+
+########### AMI FAR - TRAIN ###########
+ami_far_train.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/train/rttm/
+  filename_suffix: ".rttm"
+ami_far_train.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/train/audio/
+  filename_suffix: ".wav"
+############ AMI FAR - VAL ############
+ami_far_val.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/val/rttm/
+  filename_suffix: ".rttm"
+ami_far_val.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/val/audio/
+  filename_suffix: ".wav"
+ami_far_val.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/val/audio/
+  filename_suffix: ".wav"
+############ AMI FAR - TEST ############
+ami_far_test.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/test/rttm/
+  filename_suffix: ".rttm"
+ami_far_test.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/test/audio/
+  filename_suffix: ".wav"
+ami_far_test.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_far/test/audio/
+  filename_suffix: ".wav"
+
+########## ALI NEAR - TRAIN ###########
+ali_near_train.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/train/rttm/
+  filename_suffix: ".rttm"
+ali_near_train.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/train/audio/
+  filename_suffix: ".wav"
+########### ALI NEAR - VAL ############
+ali_near_val.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/val/rttm/
+  filename_suffix: ".rttm"
+ali_near_val.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/val/audio/
+  filename_suffix: ".wav"
+ali_near_val.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/val/audio/
+  filename_suffix: ".wav"
+########### ALI NEAR - TEST ############
+ali_near_test.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/test/rttm/
+  filename_suffix: ".rttm"
+ali_near_test.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/test/audio/
+  filename_suffix: ".wav"
+ali_near_test.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ali_near/test/audio/
+  filename_suffix: ".wav"
+
+########## AMI NEAR - TRAIN ###########
+ami_near_train.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/train/rttm/
+  filename_suffix: ".rttm"
+ami_near_train.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/train/audio/
+  filename_suffix: ".wav"
+########### AMI NEAR - VAL ############
+ami_near_val.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/val/rttm/
+  filename_suffix: ".rttm"
+ami_near_val.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/val/audio/
+  filename_suffix: ".wav"
+ami_near_val.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/val/audio/
+  filename_suffix: ".wav"
+########### AMI NEAR - TEST ############
+ami_near_test.intermediate_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/test/rttm/
+  filename_suffix: ".rttm"
+ami_near_test.intermediate_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/test/audio/
+  filename_suffix: ".wav"
+ami_near_test.intermediate_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/02_intermediate/ami_near/test/audio/
+  filename_suffix: ".wav"
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+############# 03_PRIMARY ##############
+# validation reports output
+ali_far_train.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/train/format_check_report.json
+ali_far_val.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/val/format_check_report.json
+ali_far_test.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/test/format_check_report.json
+ami_far_train.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/train/format_check_report.json
+ami_far_val.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/val/format_check_report.json
+ami_far_test.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/test/format_check_report.json
+ali_near_train.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/train/format_check_report.json
+ali_near_val.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/val/format_check_report.json
+ali_near_test.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/test/format_check_report.json
+ami_near_train.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/train/format_check_report.json
+ami_near_val.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/val/format_check_report.json
+ami_near_test.format_check_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/test/format_check_report.json
+
+############# 03_PRIMARY ##############
+########### ALI FAR - TRAIN ###########
+ali_far_train.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/train/rttm/
+  filename_suffix: ".rttm"
+ali_far_train.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/train/audio/
+  filename_suffix: ".wav"
+############ ALI FAR - VAL ############
+ali_far_val.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/val/rttm/
+  filename_suffix: ".rttm"
+ali_far_val.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/val/audio/
+  filename_suffix: ".wav"
+ali_far_val.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/val/audio/
+  filename_suffix: ".wav"
+############ ALI FAR - TEST ############
+ali_far_test.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/test/rttm/
+  filename_suffix: ".rttm"
+ali_far_test.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/test/audio/
+  filename_suffix: ".wav"
+ali_far_test.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_far/test/audio/
+  filename_suffix: ".wav"
+
+########### AMI FAR - TRAIN ###########
+ami_far_train.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/train/rttm/
+  filename_suffix: ".rttm"
+ami_far_train.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/train/audio/
+  filename_suffix: ".wav"
+############ AMI FAR - VAL ############
+ami_far_val.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/val/rttm/
+  filename_suffix: ".rttm"
+ami_far_val.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/val/audio/
+  filename_suffix: ".wav"
+ami_far_val.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/val/audio/
+  filename_suffix: ".wav"
+############ AMI FAR - TEST ############
+ami_far_test.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/test/rttm/
+  filename_suffix: ".rttm"
+ami_far_test.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/test/audio/
+  filename_suffix: ".wav"
+ami_far_test.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_far/test/audio/
+  filename_suffix: ".wav"
+
+########## ALI NEAR - TRAIN ###########
+ali_near_train.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/train/rttm/
+  filename_suffix: ".rttm"
+ali_near_train.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/train/audio/
+  filename_suffix: ".wav"
+########### ALI NEAR - VAL ############
+ali_near_val.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/val/rttm/
+  filename_suffix: ".rttm"
+ali_near_val.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/val/audio/
+  filename_suffix: ".wav"
+ali_near_val.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/val/audio/
+  filename_suffix: ".wav"
+########### ALI NEAR - TEST ############
+ali_near_test.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/test/rttm/
+  filename_suffix: ".rttm"
+ali_near_test.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/test/audio/
+  filename_suffix: ".wav"
+ali_near_test.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ali_near/test/audio/
+  filename_suffix: ".wav"
+
+########## AMI NEAR - TRAIN ###########
+ami_near_train.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/train/rttm/
+  filename_suffix: ".rttm"
+ami_near_train.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/train/audio/
+  filename_suffix: ".wav"
+########### AMI NEAR - VAL ############
+ami_near_val.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/val/rttm/
+  filename_suffix: ".rttm"
+ami_near_val.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/val/audio/
+  filename_suffix: ".wav"
+ami_near_val.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/val/audio/
+  filename_suffix: ".wav"
+########### AMI NEAR - TEST ############
+ami_near_test.primary_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/test/rttm/
+  filename_suffix: ".rttm"
+ami_near_test.primary_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/test/audio/
+  filename_suffix: ".wav"
+ami_near_test.primary_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/03_primary/ami_near/test/audio/
+  filename_suffix: ".wav"
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+############# 04_CHUNKED ##############
+## (only train sets need to be chunked)
+########### ALI FAR - TRAIN ###########
+ali_far_train.chunked_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_far/train/rttm/
+  filename_suffix: ".rttm"
+ali_far_train.chunked_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.chunked_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_far/train/audio/
+  filename_suffix: ".wav"
+
+########### AMI FAR - TRAIN ###########
+ami_far_train.chunked_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_far/train/rttm/
+  filename_suffix: ".rttm"
+ami_far_train.chunked_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.chunked_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_far/train/audio/
+  filename_suffix: ".wav"
+
+########## ALI NEAR - TRAIN ###########
+ali_near_train.chunked_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_near/train/rttm/
+  filename_suffix: ".rttm"
+ali_near_train.chunked_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.chunked_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ali_near/train/audio/
+  filename_suffix: ".wav"
+
+########## AMI NEAR - TRAIN ###########
+ami_near_train.chunked_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_near/train/rttm/
+  filename_suffix: ".rttm"
+ami_near_train.chunked_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.chunked_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/04_chunked/ami_near/train/audio/
+  filename_suffix: ".wav"
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+############# 05_SAMPLED ##############
+## (only train sets need to be sampled)
+########### ALI FAR - TRAIN ###########
+ali_far_train.sampled_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_far/train/rttm/
+  filename_suffix: ".rttm"
+ali_far_train.sampled_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.sampled_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_far/train/audio/
+  filename_suffix: ".wav"
+
+########### AMI FAR - TRAIN ###########
+ami_far_train.sampled_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_far/train/rttm/
+  filename_suffix: ".rttm"
+ami_far_train.sampled_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.sampled_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_far/train/audio/
+  filename_suffix: ".wav"
+
+########## ALI NEAR - TRAIN ###########
+ali_near_train.sampled_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_near/train/rttm/
+  filename_suffix: ".rttm"
+ali_near_train.sampled_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.sampled_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ali_near/train/audio/
+  filename_suffix: ".wav"
+
+########## AMI NEAR - TRAIN ###########
+ami_near_train.sampled_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_near/train/rttm/
+  filename_suffix: ".rttm"
+ami_near_train.sampled_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.sampled_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/05_sampled/ami_near/train/audio/
+  filename_suffix: ".wav"
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+############# 06_AUGMENTED ##############
+## (only train sets need to be augmented)
+########### ALI FAR - TRAIN ###########
+ali_far_train.augmented_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_far/train/rttm/
+  filename_suffix: ".rttm"
+ali_far_train.augmented_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.augmented_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_far/train/audio/
+  filename_suffix: ".wav"
+ali_far_train.augmented_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_far/train/augment_report.json
+
+########### AMI FAR - TRAIN ###########
+ami_far_train.augmented_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_far/train/rttm/
+  filename_suffix: ".rttm"
+ami_far_train.augmented_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.augmented_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_far/train/audio/
+  filename_suffix: ".wav"
+ami_far_train.augmented_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_far/train/augment_report.json
+
+########## ALI NEAR - TRAIN ###########
+ali_near_train.augmented_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_near/train/rttm/
+  filename_suffix: ".rttm"
+ali_near_train.augmented_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.augmented_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_near/train/audio/
+  filename_suffix: ".wav"
+ali_near_train.augmented_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ali_near/train/augment_report.json
+
+########## AMI NEAR - TRAIN ###########
+ami_near_train.augmented_rttm_files:
+  type: PartitionedDataSet
+  dataset: text.TextDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_near/train/rttm/
+  filename_suffix: ".rttm"
+ami_near_train.augmented_wav_files:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.augmented_wav_files_info:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.SoundFileInfoDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_near/train/audio/
+  filename_suffix: ".wav"
+ami_near_train.augmented_report:
+  type: json.JSONDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/06_augmented/ami_near/train/augment_report.json
+
+#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#!#
+############# 07_MODEL_INPUT ##############
+########## COMBINED - TRAIN ###########
+combined_train.model_input_rttm_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/train.rttm
+combined_train.model_input_uem_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/train.uem
+combined_train.model_input_lst_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/train.lst
+combined_wav_files_output:
+  type: PartitionedDataSet
+  dataset: klass.extras.datasets.audio_dataset.AudioDataSet
+  path: /polyaxon-v1-data/workspaces/data_tt/07_model_input/audio
+  filename_suffix: ".wav"
+
+########## COMBINED - VAL ###########
+combined_val.model_input_rttm_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/validation.rttm
+combined_val.model_input_uem_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/validation.uem
+combined_val.model_input_lst_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/validation.lst
+
+########## COMBINED - TEST ###########
+combined_test.model_input_rttm_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/test.rttm
+combined_test.model_input_uem_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/test.uem
+combined_test.model_input_lst_file:
+  type: text.TextDataSet
+  filepath: /polyaxon-v1-data/workspaces/data_tt/07_model_input/test.lst
