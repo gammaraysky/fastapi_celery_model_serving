@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.30.0 (9d8dcb518)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.30.0 (9d8dcb518)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/klass-mynetwork: "true"
+        io.kompose.service: web
+    spec:
+      containers:
+        - args:
+            - sh
+            - -c
+            - " if ! getent group 2222 > /dev/null 2>&1; then\n  groupadd -g 2222 vadklass &&\n  useradd -u 2222 -g 2222 -m -d /home/vadklass vadklass &&\n  chown -R 2222:2222 /usr/src/app &&\n  su vadklass -c \"whoami && uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload --log-config conf/base/uvicorn_cfg.ini\"\nelse\n  su vadklass -c \"whoami && uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload --log-config conf/base/uvicorn_cfg.ini\"\nfi "
+          env:
+            - name: CELERY_BROKER_URL
+              value: amqp://admin:mypass@rabbit:5672
+            - name: CELERY_RESULT_BACKEND
+              value: redis://redis:6379/0
+            - name: CELERY_TASK_TRACK_STARTED
+              value: "true"
+          image: vad_deploy:0.1.2
+          name: web
+          ports:
+            - containerPort: 8000
+              hostPort: 8004
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/src/app/vol_mount
+              name: web-claim0
+      restartPolicy: Always
+      volumes:
+        - name: web-claim0
+          persistentVolumeClaim:
+            claimName: web-claim0
+status: {}

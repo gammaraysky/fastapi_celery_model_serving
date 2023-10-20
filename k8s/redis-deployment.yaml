@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.30.0 (9d8dcb518)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis
+  name: redis
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.30.0 (9d8dcb518)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/klass-mynetwork: "true"
+        io.kompose.service: redis
+    spec:
+      containers:
+        - args:
+            - sh
+            - -c
+            - |2-
+               if ! getent group 2222 > /dev/null 2>&1; then
+                addgroup -g 2222 vadklass &&
+                adduser -u 2222 -G vadklass -h /home/vadklass -D vadklass &&
+                chown -R 2222:2222 /home/vadklass &&
+                chown -R 2222:2222 /data &&
+                su vadklass -c "whoami && exec redis-server --bind 0.0.0.0 --appendonly yes"
+              else
+                su vadklass -c "whoami && exec redis-server --bind 0.0.0.0 --appendonly yes"
+              fi
+          image: redis:alpine
+          name: redis
+          ports:
+            - containerPort: 6379
+              hostPort: 6379
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: redis-claim0
+      restartPolicy: Always
+      volumes:
+        - name: redis-claim0
+          persistentVolumeClaim:
+            claimName: redis-claim0
+status: {}

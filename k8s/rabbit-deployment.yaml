@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.30.0 (9d8dcb518)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbit
+  name: rabbit
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbit
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\Han\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.30.0 (9d8dcb518)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/klass-mynetwork: "true"
+        io.kompose.service: rabbit
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_PASS
+              value: mypass
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin
+          image: rabbitmq:3-management
+          name: rabbit
+          ports:
+            - containerPort: 5672
+              hostPort: 5672
+              protocol: TCP
+            - containerPort: 15672
+              hostPort: 15672
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/rabbitmq/mnesia
+              name: rabbit-claim0
+      hostname: rabbit
+      restartPolicy: Always
+      volumes:
+        - name: rabbit-claim0
+          persistentVolumeClaim:
+            claimName: rabbit-claim0
+status: {}

@@ -1,13 +1,23 @@
-version: '3.8'
+version: '3.3'
 
 services:
   web:
-    build: .
+    # build: .  # during development, this line allows for rebuilding the image from the source repo
+    image: vad_deploy:0.1.2
     ports:
       - 8004:8000
-    command: uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload
+    command: >
+      sh -c '
+      if ! getent group 2222 > /dev/null 2>&1; then
+        groupadd -g 2222 vadklass &&
+        useradd -u 2222 -g 2222 -m -d /home/vadklass vadklass &&
+        chown -R 2222:2222 /usr/src/app &&
+        su vadklass -c "whoami && uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload --log-config conf/base/uvicorn_cfg.ini"
+      else
+        su vadklass -c "whoami && uvicorn src.klass.vad_fastapi.main:app --host 0.0.0.0 --reload --log-config conf/base/uvicorn_cfg.ini"
+      fi '
     volumes:
-      - .:/usr/src/app
+      # - .:/usr/src/app  # repo was initially mounted for immediate restart during development
       - ../vol_mount:/usr/src/app/vol_mount
     environment:
       - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
@@ -20,10 +30,19 @@ services:
       - mynetwork
 
   worker:
-    build: .
-    command: celery -A src.klass.vad_fastapi.worker.celery worker --loglevel=info # --logfile=logs/celery.log
+    image: vad_deploy:0.1.2
+    command: >
+      sh -c '
+      if ! getent group 2222 > /dev/null 2>&1; then
+        groupadd -g 2222 vadklass &&
+        useradd -u 2222 -g 2222 -m -d /home/vadklass vadklass &&
+        chown -R 2222:2222 /usr/src/app &&
+        su vadklass -c "whoami && celery -A src.klass.vad_fastapi.worker.celery worker --loglevel=info --logfile=/usr/src/app/vol_mount/logs/celery_worker.log"
+      else
+        su vadklass -c "whoami && celery -A src.klass.vad_fastapi.worker.celery worker --loglevel=info --logfile=/usr/src/app/vol_mount/logs/celery_worker.log"
+      fi'
     volumes:
-      - .:/usr/src/app
+      # - .:/usr/src/app  # repo was initially mounted for immediate restart during development
       - ../vol_mount:/usr/src/app/vol_mount
     environment:
       - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
@@ -35,19 +54,23 @@ services:
       - rabbit
     networks:
       - mynetwork
-    # https://stackoverflow.com/questions/40430543/healthcheck-of-a-docker-container-running-celery-tasks
-    # https://distributedpython.com/posts/docker-healthcheck-for-celery-workers/
-    # healthcheck:
-    #     test: celery -b amqp://admin:mypass@rabbit:5672 inspect ping -d celery@$$HOSTNAME
-    #     interval: 30s
-    #     timeout: 10s
-    #     retries: 3
 
+  # Redis - results backend
   redis:
     image: redis:alpine
-    command: redis-server --bind 0.0.0.0 --appendonly yes
+    command: >
+      sh -c '
+      if ! getent group 2222 > /dev/null 2>&1; then
+        addgroup -g 2222 vadklass &&
+        adduser -u 2222 -G vadklass -h /home/vadklass -D vadklass &&
+        chown -R 2222:2222 /home/vadklass &&
+        chown -R 2222:2222 /data &&
+        su vadklass -c "whoami && exec redis-server --bind 0.0.0.0 --appendonly yes"
+      else
+        su vadklass -c "whoami && exec redis-server --bind 0.0.0.0 --appendonly yes"
+      fi'
     volumes:
-      - ../data/redis_results_backend:/data
+      - ../vol_mount/db/redis_results_backend:/data
     ports:
       - "6379:6379"
     networks:
@@ -64,17 +87,26 @@ services:
       - "5672:5672"
       - "15672:15672"  # here, we can access rabbitmq management plugin
     volumes:
-      # - rabbit-data:/data
-      - ../data/rabbitmq_broker:/var/lib/rabbitmq
+      - ../vol_mount/db/rabbitmq_broker:/var/lib/rabbitmq/mnesia
     networks:
       - mynetwork
 
-
+  # Flower Dashboard - monitors tasks queues and results
+  # we set it to be persistent so it stores state between runs
+  # and we rely on its json API for our task status retrievals
   dashboard:
     hostname: flower
-    build: .
-    command: celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555
-    # command: celery --broker=redis://redis:6379/0 flower --port=5555
+    image: vad_deploy:0.1.2
+    command: >
+      sh -c '
+        if ! getent group 2222 > /dev/null 2>&1; then
+        groupadd -g 2222 vadklass &&
+        useradd -u 2222 -g 2222 -m -d /home/vadklass vadklass &&
+        chown -R 2222:2222 /etc/db &&
+        su vadklass -c "celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555 --logfile=/usr/src/app/vol_mount/logs/flower_dashboard.log"
+      else
+        su vadklass -c "celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555 --logfile=/usr/src/app/vol_mount/logs/flower_dashboard.log"
+      fi'
     ports:
       - 5556:5555
     environment:
@@ -84,7 +116,7 @@ services:
       - FLOWER_STATE_SAVE_INTERVAL=20
       - FLOWER_DB=/etc/db/flower.db
     volumes:
-      - ../data/flower_dashboard:/etc/db
+      - ../vol_mount/db/flower_dashboard:/etc/db
     depends_on:
       - web
       - redis
@@ -93,34 +125,7 @@ services:
     networks:
       - mynetwork
 
-
 networks:
   mynetwork:
     driver: bridge
-
-#   dashboard:
-#     build: .
-#     # command: celery --broker=amqp://admin:mypass@rabbit:5672 flower --port=5555
-#     command: celery --broker=redis://redis:6379/0 flower --port=5555
-#     ports:
-#       - 5556:5555
-#     environment:
-#       - CELERY_BROKER_URL=redis://redis:6379/0
-#       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-#       - FLOWER_PORT=5555
-#       - FLOWER_PERSISTENT=True
-#       - FLOWER_STATE_SAVE_INTERVAL=10000
-#       - FLOWER_DB=/etc/db/flower.db
-#     ports:
-#       - "5555:5555"
-#     volumes:
-#       - ./flower/storage:/etc/db/re
-#     depends_on:
-#       - redis
-
-# volumes:
-#   redis-data:
-#     driver: local
-#   rabbit-data:
-#     driver: local
 

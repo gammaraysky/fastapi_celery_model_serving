@@ -9,7 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-COPY ./requirements-fastapi.txt .
+# COPY ./requirements-fastapi.txt .
+# copy project
+COPY . .
 RUN apt-get update && \
     apt-get -y install libsndfile1 && \
     apt-get clean && \
@@ -17,5 +19,5 @@ RUN apt-get update && \
     pip install -r requirements-fastapi.txt && \
     pip install pyannote.database==5.0.1
 
-# copy project
-COPY . .
+
+# PLEASE ENSURE THAT ENTRYPOINT RUNS AS NON-ROOT USER

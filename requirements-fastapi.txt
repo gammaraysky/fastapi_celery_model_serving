@@ -25,3 +25,4 @@ pyannote-metrics==3.2.1
 pyannote-pipeline==2.3
 pydantic==1.10.7
 soundfile==0.10.3.post1
+pytz~=2022.1
